@@ -45,6 +45,18 @@
     <ClCompile Include="horseman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="castle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lumber_camp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mining_camp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="text.h">
@@ -72,6 +84,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="horseman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="castle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lumber_camp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mining_camp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

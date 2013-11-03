@@ -15,9 +15,7 @@ class field_manager {
 private:
 
 	unitlist p;
-	int n, timer;
-
-	sf::Clock clock;
+	unit* s;
 
 public:
 	field_manager();

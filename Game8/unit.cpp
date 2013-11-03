@@ -1,5 +1,19 @@
 #include "unit.h"
 
+unit::unit() {
+	
+	frameCounter = 0, switchFrame = 100, frameSpeed = 500;
+
+	playerImage.setTexture(pTexture);
+
+	source.x = 1;
+	//health = 1000;
+	
+	health_bar_back.setSize(sf::Vector2f(32, 5));
+	health_bar_back.setFillColor(sf::Color::Red);
+	health_bar.setSize(sf::Vector2f(get_health(), 5));
+	health_bar.setFillColor(sf::Color::Green);
+}
 
 void unit::draw(sf::RenderWindow &Window, int direction, bool movement, bool attack) {
 
@@ -44,9 +58,10 @@ void unit::draw(sf::RenderWindow &Window, int direction, bool movement, bool att
 
 	Window.draw(playerImage);
 
-	health_bar_back.setPosition(playerImage.getPosition().x + 16, playerImage.getPosition().y);
-	Window.draw(health_bar_back);
+	health_bar_back.setPosition(playerImage.getPosition().x + 16, playerImage.getPosition().y);	
+	health_bar.setSize(sf::Vector2f(get_health(), 5));
 	health_bar.setPosition(playerImage.getPosition().x + 16, playerImage.getPosition().y);
+	Window.draw(health_bar_back);
 	Window.draw(health_bar);
 
 }

@@ -5,7 +5,7 @@
 class text {
 
 public:
-	text(int x, int y, char text[], int size);
+	text();
 	~text();
 
 	void draw(sf::RenderWindow &Window);

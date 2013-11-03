@@ -70,11 +70,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="archer.cpp" />
+    <ClCompile Include="castle.cpp" />
     <ClCompile Include="draw_field.cpp" />
     <ClCompile Include="farm.cpp" />
     <ClCompile Include="horseman.cpp" />
     <ClCompile Include="hud.cpp" />
+    <ClCompile Include="lumber_camp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mining_camp.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="swordsman.cpp" />
     <ClCompile Include="field_manager.cpp" />
     <ClCompile Include="text.cpp" />
@@ -82,10 +86,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="archer.h" />
+    <ClInclude Include="castle.h" />
     <ClInclude Include="draw_field.h" />
     <ClInclude Include="farm.h" />
     <ClInclude Include="horseman.h" />
     <ClInclude Include="hud.h" />
+    <ClInclude Include="lumber_camp.h" />
+    <ClInclude Include="mining_camp.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="swordsman.h" />
     <ClInclude Include="field_manager.h" />
     <ClInclude Include="text.h" />

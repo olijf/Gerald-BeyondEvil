@@ -1,23 +1,21 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #pragma once
 
 class hud {
+
+private:
+
+sf::RectangleShape hud_top;
+sf::RectangleShape hud_bottom;
 
 public:
 
 hud();
 ~hud();
 
-void draw(sf::RenderWindow &Window);
-
-sf::RectangleShape hud_top;
-sf::RectangleShape hud_bottom;
-
-sf::Texture player_buttons;
-sf::Sprite swordsmanImage;
-sf::Sprite archerImage;
-sf::Sprite horsemanImage;
+void draw_top(sf::RenderWindow &Window);
+void draw_bottom(sf::RenderWindow &Window);
 
 };
-

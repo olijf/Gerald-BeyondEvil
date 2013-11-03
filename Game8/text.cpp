@@ -1,11 +1,9 @@
 #include "text.h"
 
-text::text(int x, int y, char text[], int size) {
+text::text() {
 	font.loadFromFile("Data/arial.ttf");
 	text1.setFont(font);
-	text1.setString(text);
-	text1.setPosition(x, y);
-	text1.setCharacterSize(size);
+	text1.setCharacterSize(14);
 	text1.setColor(sf::Color::White);
 }
 
