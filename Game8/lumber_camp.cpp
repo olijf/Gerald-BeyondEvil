@@ -14,6 +14,7 @@ lumber_camp::lumber_camp() {
 
 	active = false;
 	wood_upgrade = 0;
+	production = 5;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
@@ -88,4 +89,8 @@ void lumber_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
 	}
+}
+
+int lumber_camp::get_production(){
+	return production;
 }

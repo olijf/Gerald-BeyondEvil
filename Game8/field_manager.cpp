@@ -1,8 +1,5 @@
 #include "field_manager.h"
 
-field_manager::field_manager() {
-}
-
 field_manager::~field_manager() {
 	unitlist::iterator itUnit;
 	for (itUnit=p.begin(); itUnit!=p.end(); ++itUnit) {
@@ -42,20 +39,10 @@ void field_manager::draw(sf::RenderWindow &Window, int dir, field_manager &m) {
 
 	unitlist::iterator itUnit, priorUnit;
 
-	int x_front = 1000;
-	if (p.size() > 0 && m.p.size()>0) {
-		if(dir>0){
-			x_front = (*p.begin())->get_x() - (*(m.p.begin()))->get_x();
-		}
-		else		
-			x_front = (*(m.p.begin()))->get_x() - (*p.begin())->get_x();
-	}
-
-
 	for (itUnit=p.begin(); itUnit!=p.end();priorUnit = itUnit, ++itUnit) {
 		if ((*p.begin())!=(*itUnit))
-			if((dir == 0 && (*(priorUnit))->get_x() - (*itUnit)->get_x() < 40) || (dir == 1 && (*itUnit)->get_x() - (*(priorUnit))->get_x() < 40)){
-				if((*itUnit)->get_range()>15 && m.p.size()>0 && priorUnit==p.begin() && x_front < 40){
+			if(calculate_distance((*(priorUnit)),(*itUnit)) < 40){
+				if((*itUnit)->get_range() > 15 && m.p.size()> 0 && priorUnit==p.begin() && calculate_distance((*p.begin()),(*m.p.begin())) < 40){
 					(*itUnit)->draw(Window, dir, false, true);
 					(*(m.p.begin()))->health_down((*itUnit)->get_damage()*0.04);
 				}
@@ -65,21 +52,35 @@ void field_manager::draw(sf::RenderWindow &Window, int dir, field_manager &m) {
 			else
 				(*itUnit)->draw(Window, dir, true, false);
 		else
-			if (x_front < 40){		
+			if (p.size() >0 && m.p.size() > 0 && calculate_distance((*p.begin()),(*m.p.begin())) < 40){		
 				(*itUnit)->draw(Window, dir, false, true);
 				(*itUnit)->health_down((*m.p.begin())->get_damage()*0.04);
 			}
 			else
-				if ((*itUnit)->get_x() < 135 || (*itUnit)->get_x() > 1100)
+				if ((*itUnit)->get_x() < 225 && dir == 1){
 					(*itUnit)->draw(Window, dir, false, true);
-		//	delete_unit();
+					stat.health_down_player((*itUnit)->get_damage()*0.04);
+				}else if((*itUnit)->get_x() > 990 && dir == 0){					
+					(*itUnit)->draw(Window, dir, false, true);
+					stat.health_down_enemy((*itUnit)->get_damage()*0.04);
+				}
 				else
 					(*itUnit)->draw(Window, dir, true, false);
 	}
-	if(p.size() > 0 && ((*p.begin())->get_health()<1)){
+	if(p.size() > 0 && !((*p.begin())->get_health()>0)){
 		std::cout<<"unit dood";			
 		delete_unit();
 	}
+}
+
+float field_manager::calculate_distance(unit * &obj1, unit * &obj2){
+	if(obj1->get_x() - obj2->get_x() < -1.0)
+		return obj2->get_x() - obj1->get_x();	
+	return obj1->get_x() - obj2->get_x();
+}
+
+int field_manager::get_size() {
+	return p.size();
 }
 
 void field_manager::delete_unit() {

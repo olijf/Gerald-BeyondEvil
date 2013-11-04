@@ -5,6 +5,7 @@
 #include "hud.h"
 #include "text.h"
 #include "field_manager.h"
+#include "market.h"
 
 #pragma once
 
@@ -18,9 +19,10 @@ sf::Texture castleTexture, player_buttons;
 sf::Sprite castleImage, swordsmanImage, archerImage, horsemanImage;
 text upgrade_cost, upgrade_info;
 
+market * market1;
 public:
 
-castle();
+castle(market * market2);
 ~castle();
 
 void test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse, field_manager &player_manager);

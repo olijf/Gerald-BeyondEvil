@@ -14,12 +14,22 @@ farm::farm() {
 
 	active = false;
 	food_upgrade = 0;
+	production = 5;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
 
 farm::~farm() {
 }
+
+/* void farm::update(){
+	time = clock.getElapsedTime();
+	if (time.asSeconds() >= 5){
+		amount += production;
+		clock.restart();
+		std::cout << "Gelukt!\n" << amount;
+	}
+}*/
 
 void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse) {
 
@@ -90,4 +100,8 @@ void farm::draw(sf::RenderWindow &Window, hud &player_hud) {
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
 	}
+}
+
+int farm::get_production(){
+	return production;
 }

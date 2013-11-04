@@ -6,7 +6,7 @@ horseman::horseman() {
 	health = 4000;
 	factor = 0.008;
 	damage = 100;	
-	range = 100;
+	range = 15;
 }
 
 horseman::~horseman() {

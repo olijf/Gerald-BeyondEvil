@@ -20,6 +20,8 @@ mining_camp::mining_camp() {
 	active = false;
 	stone_upgrade = 0;
 	gold_upgrade = 0;
+	stone_production = 5;
+	gold_production = 5;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
@@ -124,4 +126,11 @@ void mining_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
 	}
+}
+
+int mining_camp::get_stone_production(){
+	return gold_production;
+}
+int mining_camp::get_gold_production(){
+	return stone_production;
 }

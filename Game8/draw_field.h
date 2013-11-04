@@ -4,6 +4,11 @@
 
 class draw_field {
 
+private:
+
+sf::Texture fieldTexture;
+sf::Sprite fieldImage;
+
 public:
 
 draw_field();
@@ -11,8 +16,4 @@ draw_field();
 
 void draw(sf::RenderWindow &Window);
 
-sf::Texture fieldTexture;
-sf::Sprite fieldImage;
-
 };
-
