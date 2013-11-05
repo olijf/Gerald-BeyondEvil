@@ -4,6 +4,8 @@
 #include "mouse.h"
 #include "hud.h"
 #include "text.h"
+#include "resources.h"
+#include "audio.h"
 
 #pragma once
 
@@ -13,21 +15,19 @@ private:
 
 bool active, hover;
 int food_upgrade, production;
-
+audio audio4;
 
 sf::Texture farmTexture, food_buttons;
 sf::Sprite farmImage, foodImage;
 text upgrade_cost, upgrade_info;
-sf::Clock clock;
-sf::Time time;
+resources * resources1;
 
 public:
 
-farm();
+farm(resources * resources2);
 ~farm();
 
 void test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse);
 void draw(sf::RenderWindow &Window, hud &player_hud);
-void update();
 int get_production();
 };

@@ -10,11 +10,22 @@ ai::~ai() {
 void ai::test(field_manager &player_manager, field_manager &enemy_manager) {
 	if (spawn) {
 		spawn = false;
-		temp = random_int(4, 10);
+		if (global_clock.getElapsedTime().asSeconds() < 120) {
+			spawn_time = random_int(10, 15);
+			unit_type = random_int(1, 2);
+		}
+		else if (global_clock.getElapsedTime().asSeconds() < 180) {
+			spawn_time = random_int(10, 15);
+			unit_type = random_int(1, 3);
+		}
+		else {
+			spawn_time = random_int(5, 10);
+			unit_type = random_int(1, 3);
+		}
 	}
-	if (clock.getElapsedTime().asSeconds() > temp && enemy_manager.get_size() < 10) {
-		enemy_manager.new_unit(random_int(1, 3), true);
-		clock.restart();
+	if (unit_clock.getElapsedTime().asSeconds() > spawn_time && enemy_manager.get_size() < 16) {
+		enemy_manager.new_unit(unit_type, true);
+		unit_clock.restart();
 		spawn = true;
 	}
 }

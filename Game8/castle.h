@@ -5,7 +5,8 @@
 #include "hud.h"
 #include "text.h"
 #include "field_manager.h"
-#include "market.h"
+#include "resources.h"
+#include "audio.h"
 
 #pragma once
 
@@ -13,16 +14,18 @@ class castle {
 
 private:
 
-bool active, hover;
+bool active, hover, spawn;
 
 sf::Texture castleTexture, player_buttons;
 sf::Sprite castleImage, swordsmanImage, archerImage, horsemanImage;
 text upgrade_cost, upgrade_info;
 
-market * market1;
+resources * resources1;
+audio audio1;
+
 public:
 
-castle(market * market2);
+castle(resources * resources2);
 ~castle();
 
 void test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse, field_manager &player_manager);

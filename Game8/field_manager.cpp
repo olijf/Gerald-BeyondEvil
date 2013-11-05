@@ -87,5 +87,6 @@ void field_manager::delete_unit() {
 	if (p.size() > 0) {
 		delete (*(p.begin()));
 		p.erase(p.begin());
+		audio2.unit_down();
 	}
 }

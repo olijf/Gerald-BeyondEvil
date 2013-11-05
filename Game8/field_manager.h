@@ -6,6 +6,7 @@
 #include "archer.h"
 #include "horseman.h"
 #include "status.h"
+#include "audio.h"
 
 #pragma once
 
@@ -18,6 +19,7 @@ private:
 	unitlist p;
 	unit* s;
 	status &stat;
+	audio audio2;
 
 public:
 	field_manager();

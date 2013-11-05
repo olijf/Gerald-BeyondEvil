@@ -1,7 +1,13 @@
+#include "audio.h"
+
 #pragma once
+
 class status{
 private:
 	int health_enemy, health_player;
+	audio audio3;
+	sf::Time time;
+	sf::Clock clock;
 public:
 	status();
 	~status();

@@ -16,6 +16,10 @@ void mouse::set_hover(bool hover) {
 		mouseImage.setTextureRect(sf::IntRect(0, 0, 30, 30));
 }
 
+void mouse::set_disable() {
+	mouseImage.setTextureRect(sf::IntRect(0, 60, 30, 30));
+}
+
 void mouse::draw(sf::RenderWindow &Window) {
 	mouseImage.setPosition(sf::Vector2f(sf::Mouse::getPosition(Window)));
 	Window.draw(mouseImage);

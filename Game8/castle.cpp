@@ -1,6 +1,7 @@
 #include "castle.h"
 
-castle::castle(market * market2):market1(market2) {
+castle::castle(resources * resources2):resources1(resources2) {
+	audio1.play_background_music();
 	//castle
 	castleTexture.loadFromFile("Data/castle.png");
 	castleImage.setTexture(castleTexture);
@@ -11,19 +12,19 @@ castle::castle(market * market2):market1(market2) {
 
 	swordsmanImage.setTexture(player_buttons);
 	swordsmanImage.setTextureRect(sf::IntRect(0, 0, 40, 40));
-	swordsmanImage.setPosition(sf::Vector2f(30, 650));
+	swordsmanImage.setPosition(sf::Vector2f(25, 642));
 
 	archerImage.setTexture(player_buttons);
 	archerImage.setTextureRect(sf::IntRect(40, 0, 40, 40));
-	archerImage.setPosition(sf::Vector2f(80, 650));
+	archerImage.setPosition(sf::Vector2f(75, 642));
 
 	horsemanImage.setTexture(player_buttons);
 	horsemanImage.setTextureRect(sf::IntRect(80, 0, 40, 40));
-	horsemanImage.setPosition(sf::Vector2f(130, 650));
+	horsemanImage.setPosition(sf::Vector2f(125, 642));
 
 	active = false;
-	upgrade_cost.set_position(200, 640);
-	upgrade_info.set_position(300, 640);
+	upgrade_cost.set_position(200, 637);
+	upgrade_info.set_position(300, 637);
 }
 
 castle::~castle() {
@@ -44,11 +45,18 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 	if ((mouseX > castleX && mouseX < (castleX+castleWidth)) && (mouseY > castleY && mouseY < (castleY+castleHeight))) {
 		player_mouse.set_hover(true);
 		hover = true;
-		if (Event.mouseButton.button == sf::Mouse::Left)
+		if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && !active) {
 			active = true;
+			std::cout << "11111111111" << std::endl;
+			//changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
+		}
 	}
-	else if (Event.mouseButton.button == sf::Mouse::Left && (mouseY < (Window.getSize().y-90) || mouseX > 500)) {
+	else if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && (mouseY < (Window.getSize().y-100) || mouseX > 500)) {
 		active = false;
+		std::cout << "222222222222" << std::endl;
+		//changes the event otherwise sf::Mouse::Left is called repeatedly
+		sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 	}
 	else if (hover) {
 		player_mouse.set_hover(false);
@@ -57,90 +65,104 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 		upgrade_info.set_text("");
 	}
 
-	//buttons
-	//swordsman button
-	if ((mouseX > swordsmanImage.getPosition().x && mouseX < (swordsmanImage.getPosition().x+40)) && (mouseY > swordsmanImage.getPosition().y && mouseY < (swordsmanImage.getPosition().y+40))) {
-		if (active) {
-			if(market1->get_food() >= 30 && market1->get_wood() >= 10 && market1->get_gold() >=10){
+	if (active) {
+		//buttons
+		//swordsman button
+		if ((mouseX > swordsmanImage.getPosition().x && mouseX < (swordsmanImage.getPosition().x+40)) && (mouseY > swordsmanImage.getPosition().y && mouseY < (swordsmanImage.getPosition().y+40))) {
+
+			hover = true;
+			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+
+			if (resources1->get_food() >= 30 && resources1->get_wood() >= 30 && resources1->get_gold() >= 10) {
+				player_mouse.set_hover(true);
+				upgrade_info.set_text("Lorem Ipsum1..");
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						swordsmanImage.setTextureRect(sf::IntRect(0, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
-						market1->decrease_food(30);
-						market1->decrease_wood(10);
-						market1->decrease_gold(10);
+						resources1->decrease_food(30);
+						resources1->decrease_wood(10);
+						resources1->decrease_gold(10);
 						player_manager.new_unit(1, false);
+						audio1.spawn_swordsman();
+						
 					}
+					//changes the event otherwise sf::Mouse::Left is called repeatedly
+					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
-			else{
+			else {
+				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
-			player_mouse.set_hover(true);
-			hover = true;
-			upgrade_cost.set_text("Food:\t30\nWood:\t10\nStone:\t0\nGold:\t10");
-			//upgrade_info.set_text("Lorem Ipsum1..");
 		}
-	}
-	//archer button
-	else if ((mouseX > archerImage.getPosition().x && mouseX < (archerImage.getPosition().x+40)) && (mouseY > archerImage.getPosition().y && mouseY < (archerImage.getPosition().y+40))) {
-		if (active) {
-			if(market1->get_food() >= 30 && market1->get_wood() >= 30 && market1->get_gold() >=10){
+		//archer button
+		else if ((mouseX > archerImage.getPosition().x && mouseX < (archerImage.getPosition().x+40)) && (mouseY > archerImage.getPosition().y && mouseY < (archerImage.getPosition().y+40))) {
+
+			hover = true;
+			upgrade_cost.set_text("Food: \t30\nWood:\t30\nStone:\t0\nGold: \t10");
+
+			if (resources1->get_food() >= 30 && resources1->get_wood() >= 30 && resources1->get_gold() >= 10) {
+				player_mouse.set_hover(true);
+				upgrade_info.set_text("Lorem Ipsum1..");
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						archerImage.setTextureRect(sf::IntRect(40, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
-						market1->decrease_food(30);
-						market1->decrease_wood(30);
-						market1->decrease_gold(10);
+						resources1->decrease_food(30);
+						resources1->decrease_wood(30);
+						resources1->decrease_gold(10);
 						player_manager.new_unit(2, false);
+						audio1.spawn_archer();
 					}
+					//changes the event otherwise sf::Mouse::Left is called repeatedly
+					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
-			else{
+			else {
+				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
-			player_mouse.set_hover(true);
-			hover = true;
-			upgrade_cost.set_text("Food:\t30\nWood:\t30\nStone:\t0\nGold:\t10");
-			//upgrade_info.set_text("Lorem Ipsum2..");
 		}
-	}
-	//horseman button
-	else if ((mouseX > horsemanImage.getPosition().x && mouseX < (horsemanImage.getPosition().x+40)) && (mouseY > horsemanImage.getPosition().y && mouseY < (horsemanImage.getPosition().y+40))) {
-		if (active) {
-			if(market1->get_food() >= 50 && market1->get_wood() >= 20 && market1->get_stone() >= 5 && market1->get_gold() >=20){
-				if (Event.mouseButton.button == sf::Mouse::Left) {
+		//horseman button
+		else if ((mouseX > horsemanImage.getPosition().x && mouseX < (horsemanImage.getPosition().x+40)) && (mouseY > horsemanImage.getPosition().y && mouseY < (horsemanImage.getPosition().y+40))) {
+
+			hover = true;
+			upgrade_cost.set_text("Food: \t50\nWood:\t20\nStone:\t5\nGold: \t20");
+
+			if (resources1->get_food() >= 50 && resources1->get_wood() >= 20 && resources1->get_stone() >= 5 && resources1->get_gold() >= 20) {
+				player_mouse.set_hover(true);
+				upgrade_info.set_text("Lorem Ipsum1..");
+				if (Event.mouseButton.button == sf::Mouse::Left && spawn) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						horsemanImage.setTextureRect(sf::IntRect(80, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
-						market1->decrease_food(50);
-						market1->decrease_wood(20);
-						market1->decrease_stone(5);
-						market1->decrease_gold(20);
+						resources1->decrease_food(50);
+						resources1->decrease_wood(20);
+						resources1->decrease_stone(5);
+						resources1->decrease_gold(20);
 						player_manager.new_unit(3, false);
+						audio1.spawn_horseman();
 					}
+					//changes the event otherwise sf::Mouse::Left is called repeatedly
+					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
-			else{
+			else {
+				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
-			player_mouse.set_hover(true);
-			hover = true;
-			upgrade_cost.set_text("Food:\t50\nWood:\t20\nStone:\t5\nGold:\t20");
-			//upgrade_info.set_text("Lorem Ipsum3..");
+		}
+		//reset buttons
+		if (Event.type == sf::Event::MouseButtonReleased) {
+			swordsmanImage.setTextureRect(sf::IntRect(0, 0, 40, 40));
+			archerImage.setTextureRect(sf::IntRect(40, 0, 40, 40));
+			horsemanImage.setTextureRect(sf::IntRect(80, 0, 40, 40));
 		}
 	}
-	//reset buttons
-	if (Event.type == sf::Event::MouseButtonReleased) {
-		swordsmanImage.setTextureRect(sf::IntRect(0, 0, 40, 40));
-		archerImage.setTextureRect(sf::IntRect(40, 0, 40, 40));
-		horsemanImage.setTextureRect(sf::IntRect(80, 0, 40, 40));
-	}
-
 }
 
 void castle::draw(sf::RenderWindow &Window, hud &player_hud) {

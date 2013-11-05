@@ -14,6 +14,7 @@ public:
 	~mouse();
 
 	void set_hover(bool hover);
+	void set_disable();
 	void draw(sf::RenderWindow &Window);
 
 };

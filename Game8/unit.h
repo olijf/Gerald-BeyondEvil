@@ -7,8 +7,15 @@ class unit {
 
 protected:
 
-	int health, damage, range;
+	int health, damage, range, speed;
 	float factor;
+	
+
+	sf::Texture pTexture;
+	sf::Sprite playerImage;
+	sf::RectangleShape health_bar_back;
+	sf::RectangleShape health_bar;
+	sf::Clock clock;
 
 public:
 
@@ -31,12 +38,6 @@ public:
 	int get_range(){
 		return range;
 	}
-
-	sf::Texture pTexture;
-	sf::Sprite playerImage;
-	sf::RectangleShape health_bar_back;
-	sf::RectangleShape health_bar;
-	sf::Clock clock;
 
 	int get_x() {
 		//std::cout<< (int)playerImage.getPosition().x <<'\n';

@@ -8,6 +8,7 @@ unit::unit() {
 
 	source.x = 1;
 	//health = 1000;
+	speed = 1;
 	
 	health_bar_back.setSize(sf::Vector2f(32, 5));
 	health_bar_back.setFillColor(sf::Color::Red);
@@ -21,7 +22,7 @@ void unit::draw(sf::RenderWindow &Window, int direction, bool movement, bool att
 		case 0:
 			source.y = Right;
 			if (movement) {
-				playerImage.move(.125, 0);
+				playerImage.move(speed, 0);
 			}
 			if (attack) {
 				source.y = attackRight;
@@ -30,7 +31,7 @@ void unit::draw(sf::RenderWindow &Window, int direction, bool movement, bool att
 		case 1:
 			source.y = Left;
 			if (movement) {
-				playerImage.move(-.125, 0);
+				playerImage.move(-speed, 0);
 			}
 			if (attack) {
 				source.y = attackLeft;

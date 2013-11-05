@@ -4,7 +4,7 @@ text::text() {
 	font.loadFromFile("Data/arial.ttf");
 	text1.setFont(font);
 	text1.setCharacterSize(14);
-	text1.setColor(sf::Color::White);
+	text1.setColor(sf::Color::Black);
 }
 
 text::~text() {

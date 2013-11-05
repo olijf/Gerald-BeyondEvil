@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ai">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAABAAAAAAAAAAABAAAAAACIBAACAAAAAAA=</HashCode>
+      <FileName>ai.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="archer" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>archer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="castle">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAQBABAAACAAIAAAAAQAAFAAAMAAIAIAAAAAA=</HashCode>
+      <FileName>castle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="draw_field" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAgAAAABAAAAAAABAAAAA=</HashCode>
+      <FileName>draw_field.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="farm" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAEABAAAAAAIAABAAQAQFAQAIAACCsAAEAgA=</HashCode>
+      <FileName>farm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="horseman" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>horseman.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="hud">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAIgABBAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>hud.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lumber_camp" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAEABABBAAAKAABAAQAABCAAIAAoAIAAAAAA=</HashCode>
+      <FileName>lumber_camp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="market" Collapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAFIQEBAAAAAAARAACAAACAEAAQAAAgAEACQAAkAEI=</HashCode>
+      <FileName>market.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mining_camp">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAABAAABIEAAAAJAAIABQAgBAAAIAAAsIAAAACA=</HashCode>
+      <FileName>mining_camp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mouse">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAIAAkEAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>mouse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="status" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAAAAAAgAAAAgAgAAAAAAAAIEAAAAAgAAA=</HashCode>
+      <FileName>status.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="swordsman">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>swordsman.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="field_manager">
+    <Position X="2.75" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAQAAAAAAAAAAIAAAAAAAAEAoAAAMAAgCAAAAA=</HashCode>
+      <FileName>field_manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="text" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAACAAAAAAAAAAAIAAAAAAAQAAAAYAAAAAAIAAAA=</HashCode>
+      <FileName>text.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="unit" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABIACUiwAIQAgIAAgAAAIACAAiAAAACAAAAYAw=</HashCode>
+      <FileName>unit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="unitlist" Collapsed="true">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>field_manager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

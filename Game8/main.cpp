@@ -22,24 +22,30 @@
 int main() {
 
 	sf::RenderWindow Window(sf::VideoMode(1280, 720), "Game10");
+
+	glEnable(GL_TEXTURE_2D);
+
+	Window.setFramerateLimit(60);
+	Window.setVerticalSyncEnabled(true);
+
 	Window.setMouseCursorVisible(false);
 	Window.setKeyRepeatEnabled(false);
 
-	// it works out of the box
-	glEnable(GL_TEXTURE_2D);
 	draw_field field;
-	hud player_hud;
 	status castlehealth;
+	
+	hud player_hud(castlehealth);
 	field_manager player_manager(castlehealth);
 	field_manager enemy_manager(castlehealth);
 
 	mouse player_mouse;
 
-	farm player_farm;
-	lumber_camp player_lumber_camp;
-	mining_camp player_mining_camp;
-	market player_market(&player_farm, &player_lumber_camp, &player_mining_camp);
-	castle player_castle(&player_market);
+	resources player_resources;
+	farm player_farm(&player_resources);
+	lumber_camp player_lumber_camp(&player_resources);
+	mining_camp player_mining_camp(&player_resources);
+	market player_market(&player_farm, &player_lumber_camp, &player_mining_camp, &player_resources);
+	castle player_castle(&player_resources);
 
 	ai enemy_ai;
 
@@ -48,7 +54,6 @@ int main() {
 	while (Window.isOpen()) {
 
 		while (Window.pollEvent(Event)) {
-			
 			if (Event.type == sf::Event::KeyReleased) {
 				if (Event.key.code == sf::Keyboard::S)
 					enemy_manager.new_unit(1, true);
@@ -65,18 +70,14 @@ int main() {
 				if (Event.key.code == sf::Keyboard::D)
 					player_manager.delete_unit();
 			}
-
 			if (Event.type == sf::Event::Closed)
 				Window.close();
-
-			if (Event.mouseButton.button == sf::Mouse::Left || Event.type == sf::Event::MouseMoved) {
-				player_farm.test(Event, Window, player_mouse);
-				player_lumber_camp.test(Event, Window, player_mouse);
-				player_mining_camp.test(Event, Window, player_mouse);
-				player_castle.test(Event, Window, player_mouse, player_manager);
-			}
-
 		}
+
+		player_farm.test(Event, Window, player_mouse);
+		player_lumber_camp.test(Event, Window, player_mouse);
+		player_mining_camp.test(Event, Window, player_mouse);
+		player_castle.test(Event, Window, player_mouse, player_manager);
 
 		field.draw(Window);
 

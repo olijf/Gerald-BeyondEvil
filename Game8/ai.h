@@ -8,9 +8,9 @@ class ai {
 
 private:
 
-sf::Clock clock;
+sf::Clock global_clock, unit_clock;
 bool spawn;
-int temp;
+int spawn_time, unit_type;
 
 public:
 

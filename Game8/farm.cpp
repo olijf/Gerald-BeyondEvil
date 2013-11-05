@@ -1,6 +1,6 @@
 #include "farm.h"
 
-farm::farm() {
+farm::farm(resources * resources2):resources1(resources2){
 	//farm
 	farmTexture.loadFromFile("Data/farm.png");
 	farmImage.setTexture(farmTexture);
@@ -22,15 +22,6 @@ farm::farm() {
 farm::~farm() {
 }
 
-/* void farm::update(){
-	time = clock.getElapsedTime();
-	if (time.asSeconds() >= 5){
-		amount += production;
-		clock.restart();
-		std::cout << "Gelukt!\n" << amount;
-	}
-}*/
-
 void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse) {
 
 	int mouseX = sf::Mouse::getPosition(Window).x;
@@ -46,11 +37,16 @@ void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse)
 	if ((mouseX > farmX && mouseX < (farmX+farmWidth)) && (mouseY > farmY && mouseY < (farmY+farmHeight))) {
 		player_mouse.set_hover(true);
 		hover = true;
-		if (Event.mouseButton.button == sf::Mouse::Left)
+		if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && !active) {
 			active = true;
+			std::cout << "clicked on farm" << std::endl;
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
+		}
 	}
 	else if (Event.mouseButton.button == sf::Mouse::Left && (mouseY < (Window.getSize().y-90) || mouseX > 500)) {
 		active = false;
+		//std::cout << "4444444444444" << std::endl;
+		sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 	}
 	else if (hover) {
 		player_mouse.set_hover(false);
@@ -58,38 +54,51 @@ void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse)
 		upgrade_cost.set_text("Farm");
 		upgrade_info.set_text("");
 	}
-
 	//button
-	if ((mouseX > foodImage.getPosition().x && mouseX < (foodImage.getPosition().x+40)) && (mouseY > foodImage.getPosition().y && mouseY < (foodImage.getPosition().y+40))) {
-		if (active) {
-			if (Event.mouseButton.button == sf::Mouse::Left) {
-				if (Event.type == sf::Event::MouseButtonPressed) {
-					foodImage.setTextureRect(sf::IntRect(food_upgrade*40, 40, 40, 40));
-				}
-				if (Event.type == sf::Event::MouseButtonReleased) {
-					if (food_upgrade < 3)
-						++food_upgrade;
-					if (food_upgrade == 3)
-						farmTexture.loadFromFile("Data/farm_max.png");
-				}
-			}
-			if (food_upgrade < 3) {
+	if (active) {
+		if ((mouseX > foodImage.getPosition().x && mouseX < (foodImage.getPosition().x+40)) && (mouseY > foodImage.getPosition().y && mouseY < (foodImage.getPosition().y+40))) {
+
+			hover = true;
+			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+
+			if (resources1->get_food() >= 1 && resources1->get_wood() >= 1 && resources1->get_stone() >= 1 && resources1->get_gold() >= 1) {
 				player_mouse.set_hover(true);
-				hover = true;
-				upgrade_cost.set_text("Food:\t20\nWood:\t20\nStone:\t10\nGold:\t5");
-				upgrade_info.set_text("Lorem ipsum..");
+				if (Event.mouseButton.button == sf::Mouse::Left) {
+					if (Event.type == sf::Event::MouseButtonPressed) {
+						foodImage.setTextureRect(sf::IntRect(food_upgrade*40, 40, 40, 40));
+					}
+					if (Event.type == sf::Event::MouseButtonReleased) {
+						if (food_upgrade < 3) {
+							resources1->decrease_food(1);
+							resources1->decrease_wood(1);
+							resources1->decrease_stone(1);
+							resources1->decrease_gold(1);
+							++food_upgrade;
+							production += 5;
+							audio4.farm_up();
+						}
+						if (food_upgrade == 3)
+							farmTexture.loadFromFile("Data/farm_max.png");
+					}
+					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
+				}
 			}
 			else {
-				upgrade_cost.set_text("Farm");
-				upgrade_info.set_text("");
+				player_mouse.set_disable();
+				upgrade_info.set_text("Not enough resources!");
 			}
+			if (food_upgrade > 2) {
+				player_mouse.set_disable();
+				upgrade_cost.set_text("Farm");
+			}
+			else
+				upgrade_info.set_text("Lorem Ipsum1..");
+		}
+		//reset_button
+		if (active && Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased) {
+			foodImage.setTextureRect(sf::IntRect(food_upgrade*40, 0, 40, 40));
 		}
 	}
-	//reset_button
-	if (active && Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased) {
-		foodImage.setTextureRect(sf::IntRect(food_upgrade*40, 0, 40, 40));
-	}
-
 }
 
 void farm::draw(sf::RenderWindow &Window, hud &player_hud) {

@@ -13,6 +13,11 @@ void status::health_down_enemy(int amount){
 }
 void status::health_down_player(int amount){
 	health_player -= amount;
+	time = clock.getElapsedTime();
+	if (time.asSeconds() >= 5){
+		audio3.we_are_under_attack();
+		clock.restart();
+	}
 	//std::cout<<"health player:"<<health_player;
 }
 int status::get_health_enemy(){
