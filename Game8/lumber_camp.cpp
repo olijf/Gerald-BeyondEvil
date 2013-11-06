@@ -1,6 +1,10 @@
 #include "lumber_camp.h"
 
-lumber_camp::lumber_camp(resources * resources2):resources1(resources2) {
+lumber_camp::lumber_camp(resources * resources2, tutorial * player_tutorial) {
+
+	resources1 = resources2;
+	the_tutorial = player_tutorial;
+
 	//lumber_camp
 	lumber_campTexture.loadFromFile("Data/lumber_camp.png");
 	lumber_campImage.setTexture(lumber_campTexture);
@@ -39,13 +43,13 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		hover = true;
 		if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && !active) {
 			active = true;
-			std::cout << "clicked on lumbercamp" << std::endl;
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 	}
 	else if (Event.mouseButton.button == sf::Mouse::Left && (mouseY < (Window.getSize().y-90) || mouseX > 500)) {
 		active = false;
-		std::cout << "4444444444444" << std::endl;
+		//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 		sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 	}
 	else if (hover) {
@@ -55,14 +59,14 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		upgrade_info.set_text("");
 	}
 
-	//button
 	if (active) {
+		//wood button
 		if ((mouseX > woodImage.getPosition().x && mouseX < (woodImage.getPosition().x+40)) && (mouseY > woodImage.getPosition().y && mouseY < (woodImage.getPosition().y+40))) {
 			
 			hover = true;
 			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
 
-			if(resources1->get_food() >= 1 && resources1->get_wood() >= 1 && resources1->get_stone() >= 1 && resources1->get_gold() >= 1) {
+			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -81,7 +85,6 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 						if (wood_upgrade == 2)
 							lumber_campTexture.loadFromFile("Data/lumber_camp_max.png");
 					}
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
@@ -94,8 +97,10 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 			}
 			else
 				upgrade_info.set_text("Lorem Ipsum1..");
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
-		//reset_button
+		//reset button
 		if (active && Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased) {
 			woodImage.setTextureRect(sf::IntRect(wood_upgrade*40, 0, 40, 40));
 		}
@@ -103,12 +108,37 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 }
 
 void lumber_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
+
 	Window.draw(lumber_campImage);
-	if (active) {
+
+	if (!the_tutorial->active()) {
+		if (active) {
 		player_hud.draw_bottom(Window);
 		Window.draw(woodImage);
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
+		}
+	}
+	else {
+		switch (the_tutorial->lumber_camp_state()) {
+			case 1:
+				if (active) {
+					player_hud.draw_bottom(Window);
+					Window.draw(woodImage);
+					Window.draw(upgrade_cost.text1);
+					Window.draw(upgrade_info.text1);
+				}
+				break;
+			case 2:
+				active = true;
+				player_hud.draw_bottom(Window);
+				Window.draw(woodImage);
+				Window.draw(upgrade_cost.text1);
+				Window.draw(upgrade_info.text1);
+				break;
+			default:
+				break;
+		}
 	}
 }
 

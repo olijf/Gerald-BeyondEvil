@@ -1,6 +1,10 @@
 #include "mining_camp.h"
 
-mining_camp::mining_camp(resources * resources2):resources1(resources2){
+mining_camp::mining_camp(resources * resources2, tutorial * player_tutorial) {
+
+	resources1 = resources2;
+	the_tutorial = player_tutorial;
+
 	//mining_camp
 	mining_campTexture.loadFromFile("Data/mining_camp.png");
 	mining_campImage.setTexture(mining_campTexture);
@@ -46,12 +50,13 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		hover = true;
 		if (Event.mouseButton.button == sf::Mouse::Left&& Event.type == sf::Event::MouseButtonReleased && !active) {
 			active = true;
-			std::cout << "clicked on mining camp" << std::endl;
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 	}
 	else if (Event.mouseButton.button == sf::Mouse::Left && (mouseY < (Window.getSize().y-90) || mouseX > 500)) {
 		active = false;
+		//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 		sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 	}
 	else if (hover) {
@@ -68,7 +73,7 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 			hover = true;
 			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
 
-			if(resources1->get_food() >= 1 && resources1->get_wood() >= 1 && resources1->get_stone() >= 1 && resources1->get_gold() >= 1) {
+			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -87,7 +92,6 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 						if (stone_upgrade == 2 && gold_upgrade == 2)
 							mining_campTexture.loadFromFile("Data/mining_camp_max.png");
 					}
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
@@ -100,6 +104,8 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 			}
 			else
 				upgrade_info.set_text("Lorem Ipsum1..");
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 		//gold button
 		else if ((mouseX > goldImage.getPosition().x && mouseX < (goldImage.getPosition().x+40)) && (mouseY > goldImage.getPosition().y && mouseY < (goldImage.getPosition().y+40))) {
@@ -107,7 +113,7 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 			hover = true;
 			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
 
-			if(resources1->get_food() >= 20 && resources1->get_wood() >= 1 && resources1->get_stone() >= 1 && resources1->get_gold() >= 1) {
+			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -126,7 +132,6 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 						if (stone_upgrade == 2 && gold_upgrade == 2)
 							mining_campTexture.loadFromFile("Data/mining_camp_max.png");
 					}
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
@@ -139,6 +144,8 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 			}
 			else
 				upgrade_info.set_text("Lorem Ipsum1..");
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 		//reset buttons
 		if (Event.type == sf::Event::MouseButtonReleased) {
@@ -149,13 +156,40 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 }
 
 void mining_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
+
 	Window.draw(mining_campImage);
-	if (active) {
+
+	if (!the_tutorial->active()) {
+		if (active) {
 		player_hud.draw_bottom(Window);
 		Window.draw(stoneImage);
 		Window.draw(goldImage);
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
+		}
+	}
+	else {
+		switch (the_tutorial->mining_camp_state()) {
+			case 1:
+				if (active) {
+					player_hud.draw_bottom(Window);
+					Window.draw(stoneImage);
+					Window.draw(goldImage);
+					Window.draw(upgrade_cost.text1);
+					Window.draw(upgrade_info.text1);
+				}
+				break;
+			case 2:
+				active = true;
+				player_hud.draw_bottom(Window);
+				Window.draw(stoneImage);
+				Window.draw(goldImage);
+				Window.draw(upgrade_cost.text1);
+				Window.draw(upgrade_info.text1);
+				break;
+			default:
+				break;
+		}
 	}
 }
 

@@ -30,10 +30,10 @@ void hud::draw_top(sf::RenderWindow &Window) {
 	Window.draw(hud_topImage);
 	Window.draw(hud_enemyImage);
 	
-	health_enemy.setSize(sf::Vector2f(stat.get_health_enemy()*0.013, 17));
+	health_enemy.setSize(sf::Vector2f(stat.get_health_enemy()*0.0013, 17));
 	Window.draw(health_enemy);
 	
-	health_player.setSize(sf::Vector2f(stat.get_health_player()*0.013, 17));
+	health_player.setSize(sf::Vector2f(stat.get_health_player()*0.0013, 17));
 	Window.draw(health_player);
 }
 

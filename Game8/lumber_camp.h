@@ -7,6 +7,8 @@
 #include "resources.h"
 #include "audio.h"
 
+#include "tutorial.h"
+
 #pragma once
 
 class lumber_camp {
@@ -22,12 +24,15 @@ text upgrade_cost, upgrade_info;
 resources * resources1;
 audio audio4;
 
+tutorial * the_tutorial;
+
 public:
 
-lumber_camp(resources * resources2);
+lumber_camp(resources * resources2, tutorial * player_tutorial);
 ~lumber_camp();
 
 void test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse);
 void draw(sf::RenderWindow &Window, hud &player_hud);
+
 int get_production();
 };

@@ -87,6 +87,7 @@
     <ClCompile Include="swordsman.cpp" />
     <ClCompile Include="field_manager.cpp" />
     <ClCompile Include="text.cpp" />
+    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +108,7 @@
     <ClInclude Include="swordsman.h" />
     <ClInclude Include="field_manager.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="tutorial.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

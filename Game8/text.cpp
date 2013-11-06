@@ -21,3 +21,7 @@ void text::set_text(const char *string) {
 void text::set_position(int x, int y) {
 	text1.setPosition(x, y);
 }
+
+void text::set_color(sf::Color color){ 
+	text1.setColor(color);
+}

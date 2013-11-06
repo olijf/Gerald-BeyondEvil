@@ -1,7 +1,12 @@
 #include "castle.h"
 
-castle::castle(resources * resources2):resources1(resources2) {
+castle::castle(resources * resources2, tutorial * player_tutorial) {
+
+	resources1 = resources2;
+	the_tutorial = player_tutorial;
+
 	audio1.play_background_music();
+
 	//castle
 	castleTexture.loadFromFile("Data/castle.png");
 	castleImage.setTexture(castleTexture);
@@ -47,15 +52,13 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 		hover = true;
 		if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && !active) {
 			active = true;
-			std::cout << "11111111111" << std::endl;
-			//changes the event otherwise sf::Mouse::Left is called repeatedly
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 	}
 	else if (Event.mouseButton.button == sf::Mouse::Left && Event.type == sf::Event::MouseButtonReleased && (mouseY < (Window.getSize().y-100) || mouseX > 500)) {
 		active = false;
-		std::cout << "222222222222" << std::endl;
-		//changes the event otherwise sf::Mouse::Left is called repeatedly
+		//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 		sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 	}
 	else if (hover) {
@@ -66,7 +69,6 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 	}
 
 	if (active) {
-		//buttons
 		//swordsman button
 		if ((mouseX > swordsmanImage.getPosition().x && mouseX < (swordsmanImage.getPosition().x+40)) && (mouseY > swordsmanImage.getPosition().y && mouseY < (swordsmanImage.getPosition().y+40))) {
 
@@ -85,17 +87,16 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 						resources1->decrease_wood(10);
 						resources1->decrease_gold(10);
 						player_manager.new_unit(1, false);
-						audio1.spawn_swordsman();
-						
+						audio1.spawn_swordsman();					
 					}
-					//changes the event otherwise sf::Mouse::Left is called repeatedly
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
 				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 		//archer button
 		else if ((mouseX > archerImage.getPosition().x && mouseX < (archerImage.getPosition().x+40)) && (mouseY > archerImage.getPosition().y && mouseY < (archerImage.getPosition().y+40))) {
@@ -117,14 +118,14 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 						player_manager.new_unit(2, false);
 						audio1.spawn_archer();
 					}
-					//changes the event otherwise sf::Mouse::Left is called repeatedly
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
 				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 		//horseman button
 		else if ((mouseX > horsemanImage.getPosition().x && mouseX < (horsemanImage.getPosition().x+40)) && (mouseY > horsemanImage.getPosition().y && mouseY < (horsemanImage.getPosition().y+40))) {
@@ -147,14 +148,14 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 						player_manager.new_unit(3, false);
 						audio1.spawn_horseman();
 					}
-					//changes the event otherwise sf::Mouse::Left is called repeatedly
-					sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 				}
 			}
 			else {
 				player_mouse.set_disable();
 				upgrade_info.set_text("Not enough resources!");
 			}
+			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
 		//reset buttons
 		if (Event.type == sf::Event::MouseButtonReleased) {
@@ -166,13 +167,42 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 }
 
 void castle::draw(sf::RenderWindow &Window, hud &player_hud) {
+
 	Window.draw(castleImage);
-	if (active) {
+
+	if (!the_tutorial->active()) {
+		if (active) {
 		player_hud.draw_bottom(Window);
 		Window.draw(swordsmanImage);
 		Window.draw(archerImage);
 		Window.draw(horsemanImage);
 		Window.draw(upgrade_cost.text1);
 		Window.draw(upgrade_info.text1);
+		}
+	}
+	else {
+		switch (the_tutorial->castle_state()) {
+			case 1:
+				if (active) {
+					player_hud.draw_bottom(Window);
+					Window.draw(swordsmanImage);
+					Window.draw(archerImage);
+					Window.draw(horsemanImage);
+					Window.draw(upgrade_cost.text1);
+					Window.draw(upgrade_info.text1);
+				}
+				break;
+			case 2:
+				active = true;
+				player_hud.draw_bottom(Window);
+				Window.draw(swordsmanImage);
+				Window.draw(archerImage);
+				Window.draw(horsemanImage);
+				Window.draw(upgrade_cost.text1);
+				Window.draw(upgrade_info.text1);
+				break;
+			default:
+				break;
+		}
 	}
 }

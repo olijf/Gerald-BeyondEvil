@@ -17,6 +17,8 @@
 #include "market.h"
 #include "status.h"
 
+#include "tutorial.h"
+
 #include "ai.h"
 
 int main() {
@@ -40,12 +42,15 @@ int main() {
 
 	mouse player_mouse;
 
+	tutorial player_tutorial(&player_mouse);
+
 	resources player_resources;
-	farm player_farm(&player_resources);
-	lumber_camp player_lumber_camp(&player_resources);
-	mining_camp player_mining_camp(&player_resources);
+	farm player_farm(&player_resources, &player_tutorial);
+	lumber_camp player_lumber_camp(&player_resources, &player_tutorial);
+	mining_camp player_mining_camp(&player_resources, &player_tutorial);
+	castle player_castle(&player_resources, &player_tutorial);
+
 	market player_market(&player_farm, &player_lumber_camp, &player_mining_camp, &player_resources);
-	castle player_castle(&player_resources);
 
 	ai enemy_ai;
 
@@ -67,8 +72,9 @@ int main() {
 				if (Event.key.code == sf::Keyboard::E)
 					enemy_manager.delete_unit();
 
-				if (Event.key.code == sf::Keyboard::D)
+				if (Event.key.code == sf::Keyboard::D) {
 					player_manager.delete_unit();
+				}
 			}
 			if (Event.type == sf::Event::Closed)
 				Window.close();
@@ -86,12 +92,16 @@ int main() {
 		player_mining_camp.draw(Window, player_hud);
 		player_castle.draw(Window, player_hud);
 
-		player_manager.draw(Window, 0, enemy_manager);
-		enemy_manager.draw(Window, 1, player_manager);
+		if (!player_tutorial.active()) {
+			player_manager.draw(Window, 0, enemy_manager);
+			enemy_manager.draw(Window, 1, player_manager);
+			enemy_ai.test(player_manager, enemy_manager);
+			player_market.update();
+		}
 
-		enemy_ai.test(player_manager, enemy_manager);
-		player_market.update();
 		player_hud.draw_top(Window);
+
+		player_tutorial.draw(Window, Event);
 
 		player_mouse.draw(Window);
 
