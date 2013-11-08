@@ -19,6 +19,7 @@ farm::farm(resources * resources2, tutorial * player_tutorial) {
 	active = false;
 	food_upgrade = 0;
 	production = 5;
+	factor = 1;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
@@ -64,9 +65,9 @@ void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse)
 		if ((mouseX > foodImage.getPosition().x && mouseX < (foodImage.getPosition().x+40)) && (mouseY > foodImage.getPosition().y && mouseY < (foodImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t40\nWood:\t70\nStone:\t110\nGold: \t70");
 
-			if (resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
+			if (resources1->get_food() >= 40 && resources1->get_wood() >= 70 && resources1->get_stone() >= 110 && resources1->get_gold() >= 70) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -74,12 +75,12 @@ void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse)
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
 						if (food_upgrade < 3) {
-							resources1->decrease_food(1);
-							resources1->decrease_wood(1);
-							resources1->decrease_stone(1);
-							resources1->decrease_gold(1);
+							resources1->decrease_food(40);
+							resources1->decrease_wood(70);
+							resources1->decrease_stone(110);
+							resources1->decrease_gold(70);
 							++food_upgrade;
-							production += 5;
+							factor += 0.20;
 							audio4.farm_up();
 						}
 						if (food_upgrade == 3)
@@ -96,7 +97,7 @@ void farm::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mouse)
 				upgrade_cost.set_text("Farm");
 			}
 			else
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Increase base food \nproduction with 20%");
 			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
@@ -142,6 +143,19 @@ void farm::draw(sf::RenderWindow &Window, hud &player_hud) {
 	}
 }
 
-int farm::get_production(){
-	return production;
+int farm::get_production() {
+	return production*factor ;
+}
+
+int farm::get_factor() {
+	return factor;
+}
+void farm::reset_farm() {
+	production = 5;
+	food_upgrade = 0;
+	factor = 1.0;
+}
+
+void farm::set_active(bool b) {
+	active = b;
 }

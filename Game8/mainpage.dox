@@ -1,0 +1,14 @@
+/**
+\mainpage Gerald Beyon Evil
+*
+* Dit is de documentatie van ons zelf ontwikkelde spel voor thema opdracht 5.
+* Hierin hebben we alle klassen beschreven, zodat iemand die met ons project verder wilt gaan hierin gemakkelijk terug kan vinden wat hij nodig heeft om functies aan te roepen.
+ *\n\n De Cheat mogelijkheden van ons spel zijn:\n
+ * S: maakt een vijandig swordsman aan, \n
+ * A: maakt een vijandig archer aan, \n
+ * H: maakt een vijandig horseman aan, \n
+ * E: vermoordt een vijandige eenheid, \n
+ * D: vermoordt een eigen eenheid, \n
+ * P: voegt 500 toe van elke grondstof
+
+*/

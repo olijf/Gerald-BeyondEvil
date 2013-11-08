@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release Test|Win32">
+      <Configuration>Release Test</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -53,6 +57,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -61,53 +66,75 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>C:\SFML\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\SFML\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ai.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="archer.cpp" />
     <ClCompile Include="audio.cpp" />
     <ClCompile Include="castle.cpp" />
     <ClCompile Include="draw_field.cpp" />
+    <ClCompile Include="FadeAnimation.cpp" />
     <ClCompile Include="farm.cpp" />
+    <ClCompile Include="game_over.cpp" />
     <ClCompile Include="horseman.cpp" />
     <ClCompile Include="hud.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="lumber_camp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maingamescreen.cpp" />
     <ClCompile Include="market.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="mining_camp.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="resources.cpp" />
+    <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="status.cpp" />
     <ClCompile Include="swordsman.cpp" />
     <ClCompile Include="field_manager.cpp" />
     <ClCompile Include="text.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="archer.h" />
     <ClInclude Include="audio.h" />
     <ClInclude Include="castle.h" />
     <ClInclude Include="draw_field.h" />
+    <ClInclude Include="FadeAnimation.h" />
     <ClInclude Include="farm.h" />
+    <ClInclude Include="game_over.h" />
     <ClInclude Include="horseman.h" />
     <ClInclude Include="hud.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="lumber_camp.h" />
+    <ClInclude Include="maingamescreen.h" />
     <ClInclude Include="market.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="mining_camp.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="resources.h" />
+    <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="status.h" />
     <ClInclude Include="swordsman.h" />
     <ClInclude Include="field_manager.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="tutorial.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>

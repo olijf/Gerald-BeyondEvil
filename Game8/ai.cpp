@@ -36,3 +36,8 @@ int ai::random_int(int begin, int max) {
 	std::cout << temp << std::endl;
 	return temp;
 }
+
+void ai::reset_ai() {
+	global_clock.restart();
+	unit_clock.restart();
+}

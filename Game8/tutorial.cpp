@@ -1,6 +1,5 @@
 #include "tutorial.h"
 
-
 tutorial::tutorial(mouse *player_mouse) {
 
 	tutorial_mouse = player_mouse;
@@ -32,9 +31,7 @@ tutorial::tutorial(mouse *player_mouse) {
 }
 
 
-tutorial::~tutorial() {
-
-}
+tutorial::~tutorial() {}
 
 void tutorial::next_step(int step) {
 	switch(step) {
@@ -158,7 +155,7 @@ void tutorial::draw(sf::RenderWindow &Window, sf::Event &Event) {
 	if (tutorial_active) {
 		if ((Event.type == sf::Event::KeyReleased && Event.key.code == sf::Keyboard::Space)) {
 			next_step(++tutorial_step);
-			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
+			//workaround - changes the event otherwise sf::Event::KeyReleased is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(sf::Mouse::getPosition(Window).x, sf::Mouse::getPosition(Window).y), Window);
 		}
 		Window.draw(tutorialImage);

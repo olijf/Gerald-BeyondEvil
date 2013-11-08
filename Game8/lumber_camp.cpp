@@ -19,6 +19,7 @@ lumber_camp::lumber_camp(resources * resources2, tutorial * player_tutorial) {
 	active = false;
 	wood_upgrade = 0;
 	production = 5;
+	factor = 1.0;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
@@ -64,9 +65,9 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		if ((mouseX > woodImage.getPosition().x && mouseX < (woodImage.getPosition().x+40)) && (mouseY > woodImage.getPosition().y && mouseY < (woodImage.getPosition().y+40))) {
 			
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t40\nWood:\t50\nStone:\t100\nGold: \t60");
 
-			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
+			if(resources1->get_food() >= 40 && resources1->get_wood() >= 50 && resources1->get_stone() >= 100 && resources1->get_gold() >= 60) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -75,12 +76,12 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 					if (Event.type == sf::Event::MouseButtonReleased) {
 						if (wood_upgrade < 2) {
 							audio4.lumber_up();
-							resources1->decrease_food(1);
-							resources1->decrease_wood(1);
-							resources1->decrease_stone(1);
-							resources1->decrease_gold(1);
+							resources1->decrease_food(40);
+							resources1->decrease_wood(50);
+							resources1->decrease_stone(100);
+							resources1->decrease_gold(60);
 							++wood_upgrade;
-							production += 5;
+							factor += 0.20;
 						}
 						if (wood_upgrade == 2)
 							lumber_campTexture.loadFromFile("Data/lumber_camp_max.png");
@@ -96,7 +97,7 @@ void lumber_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 				upgrade_cost.set_text("Lumber Camp");
 			}
 			else
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Increase base wood \nproduction with 20%");
 			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
@@ -143,5 +144,19 @@ void lumber_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
 }
 
 int lumber_camp::get_production(){
-	return production;
+	return production*factor;
+}
+
+float lumber_camp::get_factor() {
+	return factor;
+}
+
+void lumber_camp::reset_lumber() {
+	production = 5;
+	wood_upgrade = 0;
+	factor = 1.0;
+}
+
+void lumber_camp::set_active(bool b) {
+	active = b;
 }

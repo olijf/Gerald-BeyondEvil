@@ -2,10 +2,8 @@
 
 castle::castle(resources * resources2, tutorial * player_tutorial) {
 
-	resources1 = resources2;
+	resources1 = resources2; 
 	the_tutorial = player_tutorial;
-
-	audio1.play_background_music();
 
 	//castle
 	castleTexture.loadFromFile("Data/castle.png");
@@ -73,19 +71,20 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 		if ((mouseX > swordsmanImage.getPosition().x && mouseX < (swordsmanImage.getPosition().x+40)) && (mouseY > swordsmanImage.getPosition().y && mouseY < (swordsmanImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t30\nWood:\t20\nStone:\t5\nGold: \t30");
 
-			if (resources1->get_food() >= 30 && resources1->get_wood() >= 30 && resources1->get_gold() >= 10) {
+			if (resources1->get_food() >= 30 && resources1->get_wood() >= 20 && resources1->get_stone() >= 5 && resources1->get_gold() >= 30) {
 				player_mouse.set_hover(true);
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Swordsman\nStrong against buildings");
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						swordsmanImage.setTextureRect(sf::IntRect(0, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
 						resources1->decrease_food(30);
-						resources1->decrease_wood(10);
-						resources1->decrease_gold(10);
+						resources1->decrease_wood(20);
+						resources1->decrease_stone(5);
+						resources1->decrease_gold(30);
 						player_manager.new_unit(1, false);
 						audio1.spawn_swordsman();					
 					}
@@ -102,19 +101,20 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 		else if ((mouseX > archerImage.getPosition().x && mouseX < (archerImage.getPosition().x+40)) && (mouseY > archerImage.getPosition().y && mouseY < (archerImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t30\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t25\nWood:\t30\nStone:\t5\nGold: \t20");
 
-			if (resources1->get_food() >= 30 && resources1->get_wood() >= 30 && resources1->get_gold() >= 10) {
+			if (resources1->get_food() >= 25 && resources1->get_wood() >= 30 && resources1->get_stone()>= 5 && resources1->get_gold() >= 20) {
 				player_mouse.set_hover(true);
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Archer\nStrong because of long range");
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						archerImage.setTextureRect(sf::IntRect(40, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
-						resources1->decrease_food(30);
+						resources1->decrease_food(25);
 						resources1->decrease_wood(30);
-						resources1->decrease_gold(10);
+						resources1->decrease_stone(5);
+						resources1->decrease_gold(20);
 						player_manager.new_unit(2, false);
 						audio1.spawn_archer();
 					}
@@ -131,20 +131,20 @@ void castle::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player_mous
 		else if ((mouseX > horsemanImage.getPosition().x && mouseX < (horsemanImage.getPosition().x+40)) && (mouseY > horsemanImage.getPosition().y && mouseY < (horsemanImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t50\nWood:\t20\nStone:\t5\nGold: \t20");
+			upgrade_cost.set_text("Food: \t60\nWood:\t40\nStone:\t10\nGold: \t40");
 
-			if (resources1->get_food() >= 50 && resources1->get_wood() >= 20 && resources1->get_stone() >= 5 && resources1->get_gold() >= 20) {
+			if (resources1->get_food() >= 60 && resources1->get_wood() >= 40 && resources1->get_stone() >= 10 && resources1->get_gold() >= 40) {
 				player_mouse.set_hover(true);
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Horseman\nStrong as a tank");
 				if (Event.mouseButton.button == sf::Mouse::Left && spawn) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
 						horsemanImage.setTextureRect(sf::IntRect(80, 40, 40, 40));
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
-						resources1->decrease_food(50);
-						resources1->decrease_wood(20);
-						resources1->decrease_stone(5);
-						resources1->decrease_gold(20);
+						resources1->decrease_food(60);
+						resources1->decrease_wood(40);
+						resources1->decrease_stone(10);
+						resources1->decrease_gold(40);
 						player_manager.new_unit(3, false);
 						audio1.spawn_horseman();
 					}
@@ -205,4 +205,8 @@ void castle::draw(sf::RenderWindow &Window, hud &player_hud) {
 				break;
 		}
 	}
+}
+
+void castle::set_active(bool b) {
+	active = b;
 }

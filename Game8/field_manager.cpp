@@ -59,10 +59,10 @@ void field_manager::draw(sf::RenderWindow &Window, int dir, field_manager &m) {
 			else
 				if ((*itUnit)->get_x() < 225 && dir == 1){
 					(*itUnit)->draw(Window, dir, false, true);
-					stat.health_down_player((*itUnit)->get_damage()*0.04);
+					stat.health_down_player((*itUnit)->get_castle_damage()*0.04);
 				}else if((*itUnit)->get_x() > 990 && dir == 0){					
 					(*itUnit)->draw(Window, dir, false, true);
-					stat.health_down_enemy((*itUnit)->get_damage()*0.04);
+					stat.health_down_enemy((*itUnit)->get_castle_damage()*0.04);
 				}
 				else
 					(*itUnit)->draw(Window, dir, true, false);
@@ -89,4 +89,12 @@ void field_manager::delete_unit() {
 		p.erase(p.begin());
 		audio2.unit_down();
 	}
+}
+
+void field_manager::clear_units() {
+	unitlist::iterator itUnit;
+	for (itUnit=p.begin(); itUnit!=p.end(); ++itUnit) {
+		delete (*itUnit);
+	}
+	p.clear();
 }

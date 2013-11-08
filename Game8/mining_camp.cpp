@@ -26,6 +26,8 @@ mining_camp::mining_camp(resources * resources2, tutorial * player_tutorial) {
 	gold_upgrade = 0;
 	stone_production = 5;
 	gold_production = 5;
+	stone_factor = 1.0;
+	gold_factor = 1.0;
 	upgrade_cost.set_position(200, 640);
 	upgrade_info.set_position(300, 640);
 }
@@ -71,9 +73,9 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		if ((mouseX > stoneImage.getPosition().x && mouseX < (stoneImage.getPosition().x+40)) && (mouseY > stoneImage.getPosition().y && mouseY < (stoneImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t40\nWood:\t60\nStone:\t70\nGold: \t80");
 
-			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
+			if(resources1->get_food() >= 40 && resources1->get_wood() >= 60 && resources1->get_stone() >= 70 && resources1->get_gold() >= 80) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -81,12 +83,12 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
 						if (stone_upgrade < 2) {
-							resources1->decrease_food(1);
-							resources1->decrease_wood(1);
-							resources1->decrease_stone(1);
-							resources1->decrease_gold(1);
+							resources1->decrease_food(40);
+							resources1->decrease_wood(60);
+							resources1->decrease_stone(70);
+							resources1->decrease_gold(80);
 							++stone_upgrade;
-							stone_production += 5;
+							stone_factor += 0.20;
 							audio4.mine_up();
 						}
 						if (stone_upgrade == 2 && gold_upgrade == 2)
@@ -103,7 +105,7 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 				upgrade_cost.set_text("Mining Camp");
 			}
 			else
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Increase base stone \nproduction with 20%");
 			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
@@ -111,9 +113,9 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 		else if ((mouseX > goldImage.getPosition().x && mouseX < (goldImage.getPosition().x+40)) && (mouseY > goldImage.getPosition().y && mouseY < (goldImage.getPosition().y+40))) {
 
 			hover = true;
-			upgrade_cost.set_text("Food: \t30\nWood:\t10\nStone:\t0\nGold: \t10");
+			upgrade_cost.set_text("Food: \t40\nWood:\t60\nStone:\t80\nGold: \t60");
 
-			if(resources1->get_food() >= 50 && resources1->get_wood() >= 50 && resources1->get_stone() >= 50 && resources1->get_gold() >= 50) {
+			if(resources1->get_food() >= 40 && resources1->get_wood() >= 60 && resources1->get_stone() >= 80 && resources1->get_gold() >= 60) {
 				player_mouse.set_hover(true);
 				if (Event.mouseButton.button == sf::Mouse::Left) {
 					if (Event.type == sf::Event::MouseButtonPressed) {
@@ -121,12 +123,12 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 					}
 					if (Event.type == sf::Event::MouseButtonReleased) {
 						if (gold_upgrade < 2) {
-							resources1->decrease_food(1);
-							resources1->decrease_wood(1);
-							resources1->decrease_stone(1);
-							resources1->decrease_gold(1);
+							resources1->decrease_food(40);
+							resources1->decrease_wood(60);
+							resources1->decrease_stone(80);
+							resources1->decrease_gold(60);
 							++gold_upgrade;
-							gold_production+=5;
+							gold_factor += 0.20;
 							audio4.mine_up();
 						}
 						if (stone_upgrade == 2 && gold_upgrade == 2)
@@ -143,7 +145,7 @@ void mining_camp::test(sf::Event &Event, sf::RenderWindow &Window, mouse &player
 				upgrade_cost.set_text("Mining Camp");
 			}
 			else
-				upgrade_info.set_text("Lorem Ipsum1..");
+				upgrade_info.set_text("Increase base gold \nproduction with 20%");
 			//workaround - changes the event otherwise sf::Mouse::Left is called repeatedly
 			sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), Window);
 		}
@@ -194,8 +196,21 @@ void mining_camp::draw(sf::RenderWindow &Window, hud &player_hud) {
 }
 
 int mining_camp::get_stone_production(){
-	return gold_production;
+	return stone_production*stone_factor;
 }
 int mining_camp::get_gold_production(){
-	return stone_production;
+	return gold_production*gold_factor;
+}
+
+void mining_camp::reset_mining() {
+	stone_production = 5;
+	gold_production = 5;
+	stone_upgrade = 0;
+	gold_upgrade = 0;
+	stone_factor = 1.0;
+	gold_factor = 1.0;
+}
+
+void mining_camp::set_active(bool b) {
+	active = b;
 }

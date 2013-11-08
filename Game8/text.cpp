@@ -10,10 +10,6 @@ text::text() {
 text::~text() {
 }
 
-void text::draw(sf::RenderWindow &Window) {
-	Window.draw(text1);
-}
-
 void text::set_text(const char *string) {
 	text1.setString(string);
 }
@@ -24,4 +20,8 @@ void text::set_position(int x, int y) {
 
 void text::set_color(sf::Color color){ 
 	text1.setColor(color);
+}
+
+void text::draw(sf::RenderWindow &Window) {
+	Window.draw(text1);
 }
